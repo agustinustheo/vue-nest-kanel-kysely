@@ -9,10 +9,15 @@ export class ProjectService {
     return await db.selectFrom('projects').selectAll().execute();
   }
 
+  async get(id: ProjectsId) {
+    return await db.selectFrom('projects').selectAll().where("id", "=", id).execute();
+  }
+
   async create(name: string, userid: UsersId) {
     return await db
       .insertInto('projects')
       .values({ name, userid })
+      .returning(['id', 'name', 'userid'])
       .executeTakeFirst();
   }
 
@@ -21,6 +26,7 @@ export class ProjectService {
       .updateTable('projects')
       .set({ name })
       .where("id", "=", id)
+      .returning(['id', 'name', 'userid'])
       .executeTakeFirst();
   }
 
@@ -28,6 +34,7 @@ export class ProjectService {
     return await db
       .deleteFrom('projects')
       .where("id", "=", id)
+      .returning(['id', 'name', 'userid'])
       .executeTakeFirst();
   }
 }

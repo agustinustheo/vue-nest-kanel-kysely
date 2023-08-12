@@ -8,25 +8,32 @@ export class TodoService {
     return await db.selectFrom('todos').selectAll().execute();
   }
 
+  async get(id: TodosId) {
+    return await db.selectFrom('todos').selectAll().where("id", "=", id).execute();
+  }
+
   async create(title: string) {
-    return db
+    return await db
       .insertInto('todos')
       .values({ title, completed: false })
+      .returning(['id', 'title', 'completed'])
       .executeTakeFirst();
   }
 
   async update(id: TodosId, title: string, completed: boolean) {
-    return db
+    return await db
       .updateTable('todos')
       .set({ title, completed })
       .where("id", "=", id)
+      .returning(['id', 'title', 'completed'])
       .executeTakeFirst();
   }
 
   async delete(id: TodosId) {
-    return db
+    return await db
       .deleteFrom('todos')
       .where("id", "=", id)
+      .returning(['id', 'title', 'completed'])
       .executeTakeFirst();
   }
 }

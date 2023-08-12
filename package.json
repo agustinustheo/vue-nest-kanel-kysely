@@ -5,6 +5,8 @@
     "packages/*"
   ],
   "scripts": {
-    "lerna": "lerna"
+    "backend": "cd packages/todo-backend && pnpm run ",
+    "frontend": "cd packages/todo-frontend && pnpm run ",
+    "shared": "cd packages/todo-shared && pnpm run "
   }
 }

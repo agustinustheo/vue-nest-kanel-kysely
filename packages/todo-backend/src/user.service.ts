@@ -8,10 +8,15 @@ export class UserService {
     return await db.selectFrom('users').selectAll().execute();
   }
 
+  async get(id: UsersId) {
+    return await db.selectFrom('users').selectAll().where("id", "=", id).execute();
+  }
+
   async create(name: string, email: string) {
     return await db
       .insertInto('users')
       .values({ name, email })
+      .returning(['id', 'name', 'email'])
       .executeTakeFirst();
   }
 
@@ -20,6 +25,7 @@ export class UserService {
       .updateTable('users')
       .set({ name, email })
       .where("id", "=", id)
+      .returning(['id', 'name', 'email'])
       .executeTakeFirst();
   }
 
@@ -27,6 +33,7 @@ export class UserService {
     return await db
       .deleteFrom('users')
       .where("id", "=", id)
+      .returning(['id', 'name', 'email'])
       .executeTakeFirst();
   }
 }
