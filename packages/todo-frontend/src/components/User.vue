@@ -14,30 +14,34 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
 import axios from "axios";
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
   name: "UserDetails",
-  setup(props, { root }) {
+  setup() {
     const user = ref({});
     const projects = ref([]);
     const newProject = ref({
       name: "",
     });
+    const route = useRoute();
 
     const fetchUserData = async () => {
-      const response = await axios.get(
-        `http://localhost:3000/users/${root.$route.params.id}`
-      );
-      user.value = response.data;
+      const id = route.path.split("/").pop();
+      const response = await axios.get(`http://localhost:3000/users/${id}`);
+      user.value = response.data[0];
+      console.log(response);
     };
 
     const fetchProjects = async () => {
+      const id = route.path.split("/").pop();
       const projectResponse = await axios.get(
-        `http://localhost:3000/projects?userId=${root.$route.params.id}`
+        `http://localhost:3000/projects?userId=${id}`
       );
       projects.value = projectResponse.data;
+      console.log(projects.value);
     };
 
     const createProject = async () => {

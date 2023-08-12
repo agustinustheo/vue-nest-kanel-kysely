@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import { UsersId } from "todo-shared/dist/public/Users";
-import { db } from "./database";
+import { Injectable } from '@nestjs/common';
+import { UsersId } from 'todo-shared/dist/public/Users';
+import { db } from './database';
 
 @Injectable()
 export class UserService {
@@ -9,7 +9,11 @@ export class UserService {
   }
 
   async get(id: UsersId) {
-    return await db.selectFrom('users').selectAll().where("id", "=", id).execute();
+    return await db
+      .selectFrom('users')
+      .selectAll()
+      .where('id', '=', id)
+      .execute();
   }
 
   async create(name: string, email: string) {
@@ -24,7 +28,7 @@ export class UserService {
     return await db
       .updateTable('users')
       .set({ name, email })
-      .where("id", "=", id)
+      .where('id', '=', id)
       .returning(['id', 'name', 'email'])
       .executeTakeFirst();
   }
@@ -32,7 +36,7 @@ export class UserService {
   async delete(id: UsersId) {
     return await db
       .deleteFrom('users')
-      .where("id", "=", id)
+      .where('id', '=', id)
       .returning(['id', 'name', 'email'])
       .executeTakeFirst();
   }

@@ -12,28 +12,30 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
 import axios from "axios";
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
   name: "ProjectDetails",
-  setup(props, { root }) {
+  setup() {
     const project = ref({});
     const todos = ref([]);
     const newTodo = ref({
       title: "",
     });
+    const route = useRoute();
 
     const fetchProjectData = async () => {
-      const response = await axios.get(
-        `http://localhost:3000/projects/${root.$route.params.id}`
-      );
+      const id = route.path.split("/").pop();
+      const response = await axios.get(`http://localhost:3000/projects/${id}`);
       project.value = response.data;
     };
 
     const fetchTodos = async () => {
+      const id = route.path.split("/").pop();
       const todoResponse = await axios.get(
-        `http://localhost:3000/todos?projectId=${root.$route.params.id}`
+        `http://localhost:3000/todos?projectId=${id}`
       );
       todos.value = todoResponse.data;
     };

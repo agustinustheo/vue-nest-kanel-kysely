@@ -1,8 +1,16 @@
 // project.controller.ts
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+} from '@nestjs/common';
 import { ProjectService } from './project.service';
-import { UsersId } from "todo-shared/dist/public/Users";
-import { ProjectsId } from "todo-shared/dist/public/Projects";
+import { UsersId } from 'todo-shared/dist/public/Users';
+import { ProjectsId } from 'todo-shared/dist/public/Projects';
 
 @Controller('projects')
 export class ProjectController {
@@ -14,13 +22,15 @@ export class ProjectController {
   }
 
   @Get(':id')
-  async getProject(
-    @Param('id') id: ProjectsId) {
+  async getProject(@Param('id') id: ProjectsId) {
     return await this.projectService.get(id);
   }
 
   @Post()
-  async createProject(@Body('name') name: string, @Body('userid') userid: UsersId) {
+  async createProject(
+    @Body('name') name: string,
+    @Body('userid') userid: UsersId,
+  ) {
     return await this.projectService.create(name, userid);
   }
 
