@@ -17,6 +17,14 @@ export class ProjectService {
       .execute();
   }
 
+  async getByUserId(id: UsersId) {
+    return await db
+      .selectFrom('projects')
+      .selectAll()
+      .where('projects.userid', '=', id)
+      .execute();
+  }
+
   async create(name: string, userid: UsersId) {
     return await db
       .insertInto('projects')

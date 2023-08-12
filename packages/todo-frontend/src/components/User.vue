@@ -32,7 +32,6 @@ export default {
       const id = route.path.split("/").pop();
       const response = await axios.get(`http://localhost:3000/users/${id}`);
       user.value = response.data[0];
-      console.log(response);
     };
 
     const fetchProjects = async () => {
@@ -41,7 +40,6 @@ export default {
         `http://localhost:3000/projects?userId=${id}`
       );
       projects.value = projectResponse.data;
-      console.log(projects.value);
     };
 
     const createProject = async () => {

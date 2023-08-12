@@ -7,6 +7,7 @@ import {
   Delete,
   Body,
   Param,
+  Query,
 } from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { UsersId } from 'todo-shared/dist/public/Users';
@@ -17,7 +18,10 @@ export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
   @Get()
-  async getAllProjects() {
+  async getAllProjects(@Query('userId') userId: UsersId) {
+    if (userId !== null) {
+      return await this.projectService.getByUserId(userId);
+    }
     return await this.projectService.getAll();
   }
 
@@ -29,7 +33,7 @@ export class ProjectController {
   @Post()
   async createProject(
     @Body('name') name: string,
-    @Body('userid') userid: UsersId,
+    @Body('userId') userid: UsersId,
   ) {
     return await this.projectService.create(name, userid);
   }

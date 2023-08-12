@@ -29,7 +29,7 @@ export default {
     const fetchProjectData = async () => {
       const id = route.path.split("/").pop();
       const response = await axios.get(`http://localhost:3000/projects/${id}`);
-      project.value = response.data;
+      project.value = response.data[0];
     };
 
     const fetchTodos = async () => {

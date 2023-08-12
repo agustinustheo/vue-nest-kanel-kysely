@@ -19,7 +19,6 @@ export class TodoController {
 
   @Get()
   async getAllTodos(@Query('projectId') projectId: ProjectsId) {
-    console.log(projectId);
     if (projectId !== null) {
       return await this.todoService.getByProjectId(projectId);
     }
