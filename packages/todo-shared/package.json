@@ -1,0 +1,24 @@
+{
+  "name": "todo-shared",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "kanel": "npx kanel",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
+  },
+  "devDependencies": {
+    "kanel": "^3.4.3",
+    "kanel-kysely": "^0.1.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "kysely": "^0.26.1"
+  }
+}
